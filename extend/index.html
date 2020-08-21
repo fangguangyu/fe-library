@@ -1,0 +1,68 @@
+<script>
+  let obj1 = {
+    a: 1,
+    b: { b1: 1, b3: {b5: 6, b6: 3} }
+  };
+
+  let obj2 = {
+      b: { b1: 3, b3: {b4: 4, b5: 5} },
+      c: 3
+  };
+
+  let obj3 = {
+      d: 4
+  }
+  // 
+  // function extend() {
+  //   let target, name, copy;
+  //   let len = arguments.length;
+  //   target = arguments[0]
+  //   for(let i =1; i < len; i++) {
+  //     let opt = arguments[i]
+  //     if(opt != null) {
+  //       for(name in opt) {
+  //         copy = opt[name]
+  //         if(copy != undefined) {
+  //           target[name] = copy;
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return target;
+  // }
+
+  function extend() {
+    let deep = false;
+    let i = 1;
+    const len = arguments.length;
+    let target = arguments[0];
+
+    if(typeof target == 'boolean') {
+      deep = true;
+      target = arguments[i];
+      i++;
+    }
+
+    if(typeof target !== 'object') {
+      target = {}
+    }
+    
+    for(; i < len; i++) {
+      let options = arguments[i];  //  obj2
+      if(options != null) {
+        for(let name in options) {
+          let src = target[name]; // obj1.b ==> { b1: 1, b2: 2 }
+          let copy = options[name]; //  { b1: 3, b3: 4 },
+          if(copy && deep && typeof copy == 'object') {
+            target[name] = extend(deep, src, copy)
+          } else if (copy != undefined) {
+            target[name] = copy;
+          }
+        }
+      }
+    }
+    return target;
+  }
+
+  console.log(extend(true, obj1, obj2, obj3))
+</script>

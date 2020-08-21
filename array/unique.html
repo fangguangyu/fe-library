@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>unique</title>
+</head>
+<body>
+  <script>
+    // var array = ['2','2',1,1,];
+    // function unique(arrry) {
+    //   var res = []
+    //   for(var i = 0, arrayLen = array.length; i < arrayLen; i++) {
+    //     for (var j = 0, resLen = res.length;  j< resLen; j++) {
+    //       if (array[i] === res[j]) {
+    //         break;
+    //       }
+    //     }
+    //     if (j === resLen) {
+    //       res.push(array[i])
+    //     }
+    //   }
+    //   return res;
+    // }
+
+    // function unique(array) {
+    //   var res = [];
+    //   for (var i = 0, len = array.length; i < len; i++) {
+    //     var current = array[i];
+    //     if (res.indexOf(current) === -1) {
+    //       res.push(current);
+    //     }
+    //   }
+    //   return res;  
+    // }
+
+    // function unique(array) {
+    //   var res = [];
+    //   var sortedArray = array.concat().sort(); // copy之后再排序，不影响原数组
+    //   var seen;
+    //   for(var i = 0, len = sortedArray.length; i < len; i++) {
+    //     if (!i || seen !== sortedArray[i]) {
+    //       res.push(sortedArray[i])
+    //     }
+    //     seen = sortedArray[i];
+    //   }
+    //   return res;
+    // }
+
+    // var array1 = [1, 2, '1', 2, 1];
+    // var array2 = [1, 1, '1', 2, 2];   
+
+    // function unique(array, isSorted) {
+    //   var res = [];
+    //   var seen = [];
+    //   for (var i = 0, len = array.length; i < len; i++) {
+    //     var value = array[i];
+    //     if(isSorted) {
+    //       if(!i || seen !== value) {
+    //         res.push(value);
+    //       }
+    //       seen = value;
+    //     } else {
+    //       if(res.indexOf(value) === -1) {
+    //         res.push(value);
+    //       }
+    //     }
+    //   }
+    //   return res;
+    // }
+    // console.log(unique(array1));
+    // console.log(unique(array1, true))
+
+    // var array3 = [1, 1, 'a', 'A', 2, 2]
+  
+    // function unique(array, isSorted, iteratee) {
+    //   var res = [];
+    //   var seen = [];
+      
+    //   for (var i = 0, len = array.length; i < len; i++) {
+    //     var value = array[i];
+    //     var computed = iteratee ? iteratee(value, i, array) : value;
+    //     if (isSorted) {
+    //       if(!i || seen !== computed){
+    //         res.push(value);
+    //       }
+    //       seen = computed;
+    //     } else if (iteratee) {
+    //       if (seen.indexOf(computed) === -1){
+    //         seen.push(computed);
+    //         res.push(value);
+    //       }
+    //     } else if(res.indexOf(value)){
+    //       res.push(value);
+    //     }
+    //   }
+    //   return res;
+    // }
+    // console.log(unique(array3, false, function(item){
+    //   return typeof item == 'string' ? item.toLowerCase() : item
+    // }));
+
+    // var array = [1, 2, 1, 1, '1'];
+    // function unique(array) {
+    //     var res = array.filter(function(item, index, array){
+    //         return array.indexOf(item) === index;
+    //     })
+    //     return res;
+    // }
+
+    // function unique(array) {
+    //   return array.concat().sort().filter(function(item, index, array) {
+    //     return !index || item !== array[index-1]
+    //   })
+    // }
+
+    var array = [1, 2, 1, 1, '1'];
+
+    function unique(array) {
+        var obj = {};
+        return array.filter(function(item, index, array){
+           console.log(obj[item]);
+            return obj.hasOwnProperty(item) ? false : (obj[item] = true)
+        })
+    }
+
+    console.log(unique(array));
+  </script>
+</body>
+</html>
