@@ -1,0 +1,37 @@
+<script>
+  let arr = [1, [2, [3, 4,'323']]];
+  // function flatten(arr) {
+  //   let results = [];
+  //   let len = arr.length;
+  //   for(let i = 0; i < len; i++) {
+  //     if(Array.isArray(arr[i])) {
+  //       results = results.concat(flatten(arr[i]))
+  //     } else {
+  //       results.push(arr[i])
+  //     }
+  //   }
+  //   return results;
+  // }
+
+  // function flatten(arr) {
+  //   console.log(arr.toString().split(','))
+  //   return arr.toString().split(',').map(function(item) {
+  //     return +item
+  //   })
+  // }
+
+  // function flatten(arr) {
+  //   return arr.reduce(function(prev, next) {
+  //     return prev.concat(Array.isArray(next)?flatten(next):next) 
+  //   }, [])
+  // }
+  
+  function flatten(arr) {
+    console.log(arr.some(item => Array.isArray(item)))
+    while(arr.some(item => Array.isArray(item))) {
+      arr = [].concat(...arr);
+    }
+    return arr;
+  }
+  console.log(flatten(arr));
+</script>
