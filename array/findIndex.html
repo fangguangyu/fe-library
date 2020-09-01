@@ -1,0 +1,25 @@
+<script>
+  // function isBigEnough(ele) {
+  //   return ele >= 15;
+  // }
+
+  function findIndex(array, predicate, context) {
+    for(let i = 0; i < array.length; i++) {
+      if(predicate.call(context, array[i], i, array)) return i
+    }
+    return -1
+  }  
+
+  function findLastIndex(array, predicate, context) {
+    let len = array.length;
+    for(let i = len - 1; i >= 0; i--) {
+      if(predicate.call(context, array[i], i, array)) return i
+    }
+    return -1;
+  }
+
+  console.log(findIndex([1, 2, 3, 4], function(item, i, array){
+    if (item == 3) return true;
+  })) // 2
+
+</script>
