@@ -1,0 +1,47 @@
+<script>
+  function createCurry(func, args) {
+    var arity = func.length;
+    var args = args || [];
+
+    return function() {
+      var _args = [].slice.call(arguments);
+      [].unshift.apply(_args, args);
+
+      if(_args.length < arity) {
+        return createCurry.call(this, func, _args);
+      }
+
+      return func.apply(this, _args);
+    }
+  }
+
+  // * 100 加上 百分比
+  function _map(func, array) {
+    return array.map(func);
+  }
+
+  var _getNewArray = createCurry(_map);
+
+
+  var getNewArray = _getNewArray(function(item) {
+    return item * 100 + "%"
+  });
+
+  var a = getNewArray([1,2,3,4,6]);
+  console.log(a);
+
+  // 找出number
+  function _filter(func, array) {
+    return array.filter(func);
+  }
+
+  var _find = createCurry(_filter);
+
+  var findNumber = _find(function(item) {
+    if(typeof item == 'number')
+      return item;
+  })
+
+  var b = findNumber([1,2,4,5,'3',3])
+  console.log(b);
+</script>

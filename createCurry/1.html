@@ -1,0 +1,31 @@
+<script>
+  function createCurry(func, args) {
+    var arity = func.length;
+    var args = args || [];
+
+    console.log(arguments);
+
+    return function() {
+      var _args = [].slice.call(arguments);
+      [].push.apply(_args, args);
+
+      if(_args.length < arity) {
+        return createCurry.call(this, func, _args);
+      }
+
+      return func.apply(this, _args);
+    }
+  }
+
+  function check(targetString, reg) {
+    console.log(reg.test(targetString));
+    return reg.test(targetString);
+  }
+
+  var _check = createCurry(check);
+
+  var checkPhone = _check(/^1[34578]\d{9}$/);
+  var checkEmail = _check(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/);
+  checkPhone('183888888');
+  checkEmail('xxxxx@test.com');
+</script>
