@@ -1,0 +1,43 @@
+<script>
+  /**
+  *   new关键字让构造函数具有了普通函数不同的许多特点，而new的过程中，执行了如下
+  *   过程：
+  *     1. 声明了一个中间对象。
+  *     2. 将该中间对象的原型指向构造函数的原型。
+  *     3. 将构造函数的this，指向该中间对象。(func.apply(res, [...arguments]) || func.call(res, arg, arg)
+  *     4. 返回该中间对象，即返回实例对象。
+  */
+  var Person = function(name, age){
+    this.name = name;
+    this.age = age;
+    this.getName = function() {
+      return this.name;
+    }
+  }
+
+  function New(func) {
+
+     // 声明一个中间对象，该对象为最终返回的实例
+    var res = {};
+    if(func.prototype !== null) {
+      res.__proto__ = func.prototype;  // 将实例的原型指向构造函数的原型
+    }
+
+    // ret为构造函数执行的结果，这里通过apply，将构造函数内部的this指向修改为指向res，即为实例对象
+    var ret = func.apply(res, Array.prototype.slice.call(arguments, 1));
+
+    // 当我们在构造函数中明确指定了返回对象时，那么new的执行结果就是该返回对象
+    if((typeof ret === "object" || typeof ret === "function") && ret !== null) {
+      return ret;
+    }
+
+    console.log(res);
+    // 如果没有明确指定返回对象，则默认返回res，这个res就是实例对象
+    return res;
+  }
+  // 通过new声明创建实例，这里的p1，实际接收的正是new中返回的res
+  var p1 = New(Person, 'Tom', 20);
+  console.log(p1.getName());
+
+  console.log(p1 instanceof Person);
+</script>

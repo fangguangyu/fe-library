@@ -1,0 +1,33 @@
+<script>
+  function Person(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  Person.prototype.getName = function() {
+    return this.name;
+  }
+
+  Person.prototype.getAge = function() {
+    return this.age;
+  }
+
+  function Student(name, age, grade) {
+    Person.call(this, name, age);
+    this.grade = grade;
+  }
+
+  Student.prototype = Object.create(Person.prototype, {
+    constructor: {
+      value: Student
+    },
+    getGrade: {
+      value: function() {
+        return this.grade
+      }
+    }
+  })
+
+  var s1 = new Student('ming', 22, 5);
+  console.log(s1.getName());
+</script>
