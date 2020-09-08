@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>drag1</title>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      left: 0;
+      background-color: orange;
+      color: #fff;
+      text-align: center;
+      line-height: 100px;
+      margin: 5px;
+    }
+
+    button {
+      height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="elem1">elem1</div>
+  <div class="elem2">elem2</div>
+
+  <button class="moveLeft">点击修改Left移动</button>
+  <button class="moveTranslate">点击修改translate移动</button>
+
+  <script>
+    var elem1 = document.querySelector('.elem1');
+    var elem2 = document.querySelector('.elem2');
+    
+    var btn1 = document.querySelector('.moveLeft');
+    var btn2 = document.querySelector('.moveTranslate');
+
+    var left = 0;
+    var translate = 0;
+
+    btn1.onclick = function() {
+      left = left + 5;
+      elem1.style.left = left + 'px';
+    }
+    btn2.onclick = function() {
+      translate = translate + 5;
+      elem2.style.transform = 'translateX(' + translate +"px)"
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>drag2</title>
+  <style>
+    #target {
+      width: 50px;
+      height: 50px;
+      background-color: orange;
+      transform: translate(3,5);
+      cursor: move;
+    }
+  </style>
+</head>
+<body>
+  <div id="target"></div>
+
+  <script>
+    var oElem = document.getElementById('target');
+    
+    // 声明2个变量用来保存鼠标初始化位置的x，y的坐标;
+    var startX = 0;
+    var startY = 0;
+    
+    // 声明2个变量用来保存目标元素初始化位置的x, y 的坐标;
+    var sourceX = 0;
+    var sourceY = 0;
+
+    document.addEventListener('mousedown', start, false);
+
+    function start(event) {
+      startX = event.pageX;
+      startY = event.pageY;
+
+      var pos = getTargetPos(oElem);
+
+      sourceX = pos.x;
+      sourceY = pos.y;
+
+      document.addEventListener('mousemove', move, false);
+      document.addEventListener('mouseup', end, false);
+    }
+
+    function move(event) {
+      var currentX = event.pageX;
+      var currentY = event.pageY;
+      
+      var distanceX = currentX - startX;
+      var distanceY = currentY - startY;
+
+      setTargetPos(oElem, {
+        x: (sourceX + distanceX).toFixed(),
+        y: (sourceY + distanceY).toFixed()
+      })
+    }
+
+    function end(event) {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('mouseup', end);
+    }
+
+    function getStyle(elem, property) {
+      // 低版本ie通过currentStyle来获取元素的样式,其他浏览器通过getComputedStyle来获取。
+      return document.defaultView.getComputedStyle ? document.defaultView.getComputedStyle(elem, false)[property] :
+        elem.currentStyle[property];
+    }
+    
+    // 获取当前浏览器支持的transfrom兼容写法
+    function getTransform() {
+      var transform = '',
+          divStyle = document.createElement('div').style,
+          transformArr = ['transform', 'webkitTransform', 'MozTransform', 'msTransform', 'OTransform'],
+
+          i = 0,
+          len = transformArr.length;
+  
+      for(; i < len; i++) {
+        if(transformArr[i] in divStyle) {
+          return transform = transformArr[i];
+        }
+      }    
+      
+      return transform;
+    }
+  
+    // 获取目标元素的初始位置;
+    function getTargetPos(elem) {
+      var pos = {x: 0, y: 0};
+      var transform = getTransform();
+
+      if(transform) {
+        var transformValue = getStyle(elem, transform);
+        console.log(transformValue);
+        // 如果没有 transformValue 值时，给一个初始值 (0, 0);
+        if(transformValue == 'none') {
+          elem.style[transform] = 'translate(0, 0)';
+          return pos;
+        } else {
+          // 当 transformValue 有值时;
+          var temp = transformValue.match(/[0-9,\s\.]+/)[0].split(',');
+          return pos = {
+            x: parseInt(temp[4].trim()),
+            y: parseInt(temp[5].trim())
+          }
+        }
+      } else {
+        if(getStyle(elem, 'position') == 'static') {
+          elem.style.position = 'relative';
+          return pos;
+        } else {
+          var x = parseInt(getStyle(elem, 'left') ? getStyle(elem, 'left') : 0);
+          var y = parseInt(getStyle(elem, 'top') ? getStyle(elem, 'top') : 0);
+
+          return pos = {
+            x: x,
+            y: y
+          }
+        }
+      }
+    }
+  
+    // 设置target的位置方法;
+    function setTargetPos(elem, pos) {
+      var transform = getTransform();
+      
+      if(transform) {
+        elem.style[transform] = 'translate(' + pos.x + 'px,' + pos.y + 'px)';
+      } else {
+        elem.style.left = pos.x + 'px';
+        elem.style.top = pos.y + 'px';
+      }
+
+      return elem;
+    }
+  </script>
+</body>
+</html>
