@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eventEmitter</title>
+</head>
+<body>
+  <script src="./eventEmitter.js"></script>
+  <script>
+    let emitter = new EventEmitter();
+
+    console.log(emitter);
+
+    const first = (a, b, c) => {
+      console.log('第一个监听函数', a, b, c)
+    }
+
+    const second = (a, b, c) => {
+      console.log('第二个监听函数', a, b, c)
+    }
+
+    const third = (a, b, c) => {
+      console.log('第三个监听函数', a, b, c)
+    }
+
+    emitter.on('demo', first)
+            .once('demo', second)
+            .on('demo', third);
+    
+    // emitter.off('demo', third);
+    emitter.allOff('demo')
+    emitter.emit('demo', [1, 2, 3])
+
+    
+  </script>
+</body>
+</html>
