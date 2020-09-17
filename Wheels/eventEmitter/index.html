@@ -6,7 +6,7 @@
   <title>eventEmitter</title>
 </head>
 <body>
-  <script src="./eventEmitter.js"></script>
+  <script src="./eventEmitter_class.js"></script>
   <script>
     let emitter = new EventEmitter();
 
@@ -28,8 +28,8 @@
             .once('demo', second)
             .on('demo', third);
     
-    // emitter.off('demo', third);
-    emitter.allOff('demo')
+    emitter.off('demo', third);
+    // emitter.allOff('demo')
     emitter.emit('demo', [1, 2, 3])
 
     

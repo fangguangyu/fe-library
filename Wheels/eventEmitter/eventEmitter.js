@@ -1,4 +1,15 @@
 
+// 判断是否无效的function
+function isValidListener(listener) {
+  if(typeof listener === 'function') {
+    return true;
+  } else if(typeof listener === 'object') {
+    return isValidListener(listener.listener);
+  } else {
+    return false;
+  }
+}
+
 function indexOf(array, item) {
   let result = -1;
   let listener = typeof item === 'object' ?
@@ -17,6 +28,8 @@ function EventEmitter() {
   this.__events = {};
 }
 
+EventEmitter.VERSION = '1.0.0';
+
 let proto = EventEmitter.prototype;
 
 /**
@@ -27,6 +40,10 @@ let proto = EventEmitter.prototype;
  */
 proto.on = function(eventName, listener) {
   if(!eventName || !listener) return; // 任一不传就return
+
+  if(!isValidListener(listener)) {
+    throw new TypeError('listener must be a function');
+  }
 
   let events = this.__events;
   let listeners = events[eventName] = events[eventName] || [];  // 二元方程可以用这种 ||
@@ -68,7 +85,7 @@ proto.off = function(eventName, listener) {
   let listeners = this.__events[eventName];
   let index;
   for(let i = 0; i < listeners.length; i++) {
-    if(listener[i] && listeners[i].listener === listener) {
+    if(listeners[i] && listeners[i].listener === listener) {
       index = i;
       break;
     }
