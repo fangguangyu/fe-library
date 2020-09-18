@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>顶部进度条</title>
+  <style>
+    body {
+      background-color: #eee;
+    }
+
+    .bamboo {
+      width: 100px;
+      height: 20000px;
+      background-color: #1abc9c;
+    }
+  </style>
+</head>
+<body>
+  <div class="bamboo"></div>
+  <script type="text/javascript" src="./progress-indicator.js"></script>
+  <script>
+
+    let progressBar = new ProgressIndicator({
+      color: 'red'
+    });
+
+    progressBar.on('end', function() {
+      alert('恭喜您阅读完毕');
+    })
+  </script>
+</body>
+</html>
