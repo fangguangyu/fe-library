@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>固定到顶部</title>
+  <style>
+    body {
+    height: 3000px;
+    background-color: #eee;
+      margin: 0;
+    }
+
+    #sticky {
+        width: 800px;
+        height: 100px;
+        background-color: #3498db;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .rule {
+        height: 300px;
+        width: 60px;
+        background-color: #1abc9c;
+        text-align: center;
+        line-height: 300px;
+        color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="rule">
+    300px
+  </div>
+  <div id="sticky"></div>
+  <script src="./sticky.js"></script>
+  <script>
+    let element = document.getElementById('sticky');
+
+    let sticky = new Sticky(element);
+
+    console.log(sticky);
+
+    function first() {
+      console.log('first');
+    }
+
+    sticky.on('onSticky', first);
+    sticky.once('onSticky', first);
+
+    // sticky.on('onDetach', function() {
+    //   console.log('取消固定在顶部');
+    // })
+  </script>
+</body>
+</html>
