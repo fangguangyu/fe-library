@@ -4,8 +4,6 @@
     (typeof global == 'object' && global.global == global && global) ||
     this || {};
 
-    // 修复
-
   const util = {
     extend: function(target) {
       for(let i = 1; i < arguments.length; i++) {
@@ -86,8 +84,6 @@
   proto.render = function() {
     let nodes = document.querySelectorAll('[data-lazy-src], [data-lazy-background]');
     let length = nodes.length;
-
-    console.log('1');
 
     for(let i = 0; i < length; i++) {
       elem = nodes[i];

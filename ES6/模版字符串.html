@@ -1,0 +1,17 @@
+<script>
+  let x = 'Hi', y = 'Kevin';
+  var res = message`${x}, I am ${y}`;
+  console.log(res);
+
+  function message(literals, ...values) {
+    console.log(literals);
+    console.log(values);
+    let result = literals.reduce((prev, next, i) => {
+      console.log(prev);
+      console.log(i);
+      let value = values[i - 1];
+      return prev + value + next;
+    })
+    return result;
+  }
+</script>

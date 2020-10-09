@@ -1,0 +1,29 @@
+<script>
+  
+  let nums = [2, 7, 11, 15];
+  let target = 26;
+
+  // 暴力循环
+  // let twoSum = function(nums, target) {
+  //   for(let i = 0; i < nums.length - 1; i++) {
+  //     for(let j = i + 1; j < nums.length; j++) {
+  //       if(nums[i] + nums[j] == target) {
+  //         console.log(i, j)
+  //         return [i, j]
+  //       }
+  //     }
+  //   }
+  // }
+
+  let twoSum = function(nums, target) {
+    let temp = [];
+    for(let i = 0; i < nums.length; i++) {
+      let dif = target - nums[i];
+      if(temp[dif] != undefined) {
+        return [temp[dif], i]
+      }
+      temp[nums[i]] = i;
+    }
+  }
+  twoSum(nums, target);
+</script>
