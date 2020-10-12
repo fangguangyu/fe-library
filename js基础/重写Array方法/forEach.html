@@ -1,0 +1,33 @@
+<script>
+  /**
+   *  Syntax
+   * 
+   *  arr.forEach(callback(currentValue[, index[, array]]){
+   * 
+   *  }[, thisArg]) 
+   */
+
+  const arr = [1,2,3]
+  Array.prototype.forEach = function(callback, thisArg) {
+    if(this == undefined) {
+      throw new TypeError('this is null or not undefined');
+    }
+    if(typeof callback !== 'function') {
+      throw new TypeError(callback + 'must be a function')
+    }
+
+    const O = Object(this);
+    const len = O.length >>> 0;
+    let k = 0;
+    while(k < len) {
+      if(k in O) {
+        callback.call(thisArg, O[k], k, O);
+      }
+      k++;
+    }
+  }
+
+  arr.forEach(function(v, i, arr) {
+    console.log(v);
+  })
+</script>

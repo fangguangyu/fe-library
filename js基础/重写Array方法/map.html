@@ -1,0 +1,37 @@
+<script>
+  /**
+   * Syntax
+   * 
+   * let newArray = arr.map(callback(currentValue[, index[, array]]) {
+   *  
+   * }[, thisArg])
+   */ 
+
+  const arr = [1,2,3]
+  
+  Array.prototype.map = function(callback, thisArg) {
+    if(this == undefined) {
+      throw new TypeError('this is null or not undefined');
+    }
+    if(typeof callback !== 'function') {
+      throw new TypeError(callback + 'must be a function')
+    }
+
+    const res = [];
+    const O = Object(this);
+    const len = O.length >>> 0;
+
+    for(let i = 0; i < len; i++) {
+      if(i in O) {
+        res[i] = callback.call(thisArg, O[i], i, O);
+      }
+    }
+    return res;
+  }
+
+  const newArr = arr.map(function(v, i, arr) {
+    return v * 2
+  }, this)
+
+  console.log(newArr);
+</script>
