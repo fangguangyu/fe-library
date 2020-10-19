@@ -1,0 +1,15 @@
+<script>
+  // 基础简易可用版本
+  
+  const debounce = (fn, time) => {
+    const timeout = null;
+    return function() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        fn.apply(context, args);
+      }, time)
+    }
+  }
+</script>

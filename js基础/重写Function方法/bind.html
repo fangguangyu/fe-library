@@ -1,0 +1,101 @@
+<script>
+  // 第一版
+  // Function.prototype.bind2 = function(context) {
+  //   var self = this;
+  //   return function() {
+  //     return self.apply(context);
+  //   }
+  // }
+
+  // var foo = {
+  //   value: 1
+  // }
+
+  // function bar() {
+  //   return this.value;
+  // }
+
+  // var bindFoo = bar.bind2(foo);
+
+  // console.log(bindFoo())
+
+//////////////////////////////////////
+
+  // 第二版
+
+  // Function.prototype.bind2 = function(context) {
+  //   var self = this;
+  //   // bind函数参数收集
+  //   var args = Array.prototype.slice.call(arguments, 1);
+
+  //   console.log(args);
+
+  //   return function() {
+  //     // 返回的bind函数参数收集
+  //     var bindArgs = Array.prototype.slice.call(arguments);
+  //     return self.apply(context, args.concat(bindArgs));
+  //   }
+  // }
+
+  // var foo = {
+  //   value: 1
+  // }
+
+  // function bar(name, age) {
+  //   console.log(this.value);
+  //   console.log(name);
+  //   console.log(age);
+  // }
+
+  // var bindFoo = bar.bind2(foo, 'daisy');
+
+  // bindFoo(18);
+
+///////////////////////////////////////////////////
+
+  // 第三版
+  
+  Function.prototype.bind2 = function(context) {
+    var self = this;
+    var args = Array.prototype.slice.call(arguments, 1);
+
+    var fNOP = function() {}
+
+    function fBound() {
+      var fBoundArgs = Array.prototype.slice.call(arguments);
+
+      return self.apply(this instanceof fBound ? this : context, args.concat(fBoundArgs))
+    }
+    
+    fNOP.prototype = this.prototype;
+    console.log(new fNOP().__proto__ === this.prototype);
+    fBound.prototype = new fNOP();
+    return fBound;
+  }
+
+  var value = 2;
+
+  var foo = {
+      value: 1
+  };
+
+  function bar(name, age) {
+      this.value = 3;
+      this.habit = 'shopping';
+      console.log(this.value);
+      console.log(name);
+      console.log(age);
+  }
+
+  bar.prototype.friend = 'kevin';
+
+  var bindFoo = bar.bind2(foo, 'daisy');
+
+  var obj = new bindFoo('18');
+  console.log(obj);
+  // undefined
+  // daisy
+  // 18
+  console.log(obj.habit);
+  console.log(obj.friend);
+</script>
