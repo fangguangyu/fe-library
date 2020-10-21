@@ -1,4 +1,3 @@
-const { type } = require("os");
 
 const obj = {name: 'lilei'};
 

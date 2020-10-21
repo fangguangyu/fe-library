@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单例模式弹框</title>
+  <style>
+    #modal {
+        height: 200px;
+        width: 200px;
+        line-height: 200px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid black;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <button id='open'>打开弹框</button>
+  <button id='close'>关闭弹框</button>
+
+  <script>
+    function createModal() {
+      let modal = document.createElement('div');
+      modal.setAttribute('id', 'modal');
+      modal.innerHTML = '我是一个模态框';
+      modal.style.display = 'none';
+      document.body.appendChild(modal);
+      return modal;
+    } 
+
+    // 使单例模式和创建弹框解藕
+    function getSingleton(fn) {
+      let instance = null;
+      return function() {
+        if(!instance) {
+          instance = fn.apply(this, arguments);
+        }
+        return instance;
+      }
+    }
+
+    const createSingleModal = getSingleton(createModal);
+    document.getElementById('open').addEventListener('click', function() {
+      let modal = createSingleModal();
+      if(modal) {
+        modal.style.display = 'block';
+      }
+    })
+
+    document.getElementById('close').addEventListener('click', function() {
+      let modal = createSingleModal();
+      if(modal) {
+        modal.style.display = 'none';
+      }
+    })
+
+  </script>
+</body>
+</html>
