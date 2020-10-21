@@ -2,7 +2,7 @@
   var url = 'https://hq.tigerbrokers.com/fundamental/finance_calendar/getType/2017-02-26/2017-06-10';
 
   function getJSON(url) {
-    return new Promise(function(resolve, rejecct) {
+    return new Promise(function(resolve, reject) {
       var XHR = new XMLHttpRequest();
       XHR.open('GET', url, true);
       XHR.send();
@@ -14,10 +14,10 @@
               var response = JSON.parse(XHR.responseText);
               resolve(response);
             } catch(e) {
-              rejecct(e)
+              reject(e)
             }
           } else {
-            rejecct(new Error(XHR.statusText));
+            reject(new Error(XHR.statusText));
           }
         }
       }
