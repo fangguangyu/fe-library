@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>按钮点击需求</title>
+  <style>
+    #modal {
+      height: 200px;
+      width: 200px;
+      line-height: 200px;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid black;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <button id='open'>点击打开</button>
+  <button id='close'>关闭弹框</button>
+</body>
+<script>
+  const Modal = function() {
+    let modal = null;
+    return function() {
+      if(!modal) {
+        modal = document.createElement('div');
+        modal.innerHTML = '您还未登录哦～';
+        modal.id = 'modal';
+        modal.style.display = 'none';
+        document.body.appendChild(modal);
+      }
+      return modal;
+    }
+  }();
+
+  class OpenButton{
+    onClick() {
+      const modal = new Modal();
+      modal.style.display = 'block';
+    }
+  }
+
+  class Decorator{
+    constructor(open_button) {
+      this.open_button = open_button;
+    }
+
+    onClick() {
+      this.open_button.onClick();
+
+      // “包装”了一层新逻辑
+      this.changeButtonStatus();
+    }
+
+    changeButtonStatus() {
+      this.changeButtonText();
+      this.disableButton();
+    }
+
+    changeButtonText() {
+      const btn = document.getElementById('open');
+      btn.innerText = '快去登录';
+    }
+
+    disableButton() {
+      const btn = document.getElementById('open');
+      btn.setAttribute('disabled', true);
+    }
+  }
+
+  const openButton = new OpenButton();
+  const decorator = new Decorator(openButton);
+
+  document.getElementById('open').addEventListener('click', function() {
+    decorator.onClick();
+  })
+
+  document.getElementById('close').addEventListener('click', function() {
+    const modal = new Modal();
+    if(modal) {
+      modal.style.display = 'none';
+    }
+  })
+
+</script>
+</html>

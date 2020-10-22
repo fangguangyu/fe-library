@@ -17,6 +17,7 @@ function deepClone(obj) {
   return copy;
 }
 
+// 测试
 const a = {a: {name: 'lilei'}}
 const b = deepClone(a);
 b.a = {age: 12};
