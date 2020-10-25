@@ -1,0 +1,44 @@
+<body>
+  
+</body>
+<script>
+  // 事件委托机制
+  const obj = {
+    'weakLight': {
+      press: function() {
+        console.log('打开强光');
+        this.currentState = obj.strongLight;
+      }
+    },
+    'strongLight': {
+      press: function() {
+        console.log('关机');
+        this.currentState = obj.offLight;
+      }
+    },
+    'offLight': {
+      press: function() {
+        console.log('打开弱光');
+        this.currentState = obj.weakLight;
+      }
+    }
+  }
+
+  const Light = function() {
+    this.currentState = obj.offLight;
+  }
+
+  Light.prototype.init = function() {
+    const btn = document.createElement('button');
+    btn.innerText = '按钮';
+    document.body.appendChild(btn);
+    const self = this;
+    btn.addEventListener('click', function() {
+      console.log(self.currentState);
+      self.currentState.press.call(self);
+    })
+  }
+
+  const light = new Light();
+  light.init();
+</script>
