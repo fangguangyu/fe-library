@@ -45,7 +45,7 @@ class Promise{
 
     if(this.status === PENDING) {
       this.onResolveCallbacks.push(() => {
-        onResolve(this.value);
+        onFulfilled(this.value);
       })
 
       this.onRejectCallbacks.push(() => {

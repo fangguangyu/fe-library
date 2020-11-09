@@ -1,17 +1,23 @@
 <script>
-  Function.prototype.apply = function(context) {
-    var context = context || window;
+  Function.prototype.apply = function (context, arr) {
+    var context = Object(context) || window;
     context.fn = this;
-    const args = [];
 
-    for(var i = 1, len = arguments.length; i < len; i++) {
-      args.push('arguments[' + i + ']');
+    var result;
+    if (!arr) {
+        result = context.fn();
+    }
+    else {
+        var args = [];
+        for (var i = 0, len = arr.length; i < len; i++) {
+            args.push('arr[' + i + ']');
+        }
+        result = eval('context.fn(' + args + ')')
     }
 
-    var result = eval('context.fn(' + args + ')');
-    delete context.fn;
+    delete context.fn
     return result;
-  }
+}
 
   var value = 2;
 
@@ -19,9 +25,11 @@
     value: 1
   }
 
-  function bar() {
+  function bar(age, work) {
     console.log(this.value)
+    console.log(age);
+    console.log(work);
   }
 
-  bar.apply(obj);
+  bar.apply(obj, [1, '打工']);
 </script>

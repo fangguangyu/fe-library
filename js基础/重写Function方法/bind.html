@@ -59,7 +59,7 @@
     var self = this;
     var args = Array.prototype.slice.call(arguments, 1);
 
-    var fNOP = function() {}
+    var fNOP = function() {} // 创建一个新的函数，是想对this这个函数的继承。
 
     function fBound() {
       var fBoundArgs = Array.prototype.slice.call(arguments);
