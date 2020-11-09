@@ -1,0 +1,29 @@
+<script>
+  // call方法。
+  // 用法 fn.call(obj, arguments);
+
+  Function.prototype.call2 = function(obj) {
+    var context = obj ? new Object(obj) : window;
+    context.fn = this;
+
+    const args = [];
+    for(let i = 1; i < arguments.length; i++) {
+      args.push('arguments[' + i + ']');
+    }
+    console.log(args);
+    const result = eval('context.fn(' + args + ')');
+    delete context.fn;
+    return result;
+  }
+
+  const obj = {
+    name: 11
+  }
+  const a = function(age) {
+    console.log(this.name);
+    console.log(age);
+  }
+
+  a.call2(obj, 1);
+</script>
+
