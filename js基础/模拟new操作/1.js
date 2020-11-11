@@ -17,8 +17,8 @@ function objectFactory() {
   var obj = new Object(),
     Constructor = [].shift.call(arguments);
   
-  obj.__proto__ = Constructor.prototype;
-  Constructor.apply(obj, arguments);
+  obj.__proto__ = Constructor.prototype;  // 继承prototype的方法，属性
+  Constructor.apply(obj, arguments); // 继承构造方法里面的方法属性
   return obj;  
 }
 

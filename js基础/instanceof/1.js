@@ -1,4 +1,5 @@
 
+// instanceof 只能用作对象判断
 const myInstanceof = (left, right) => {
   if(typeof left !== 'object' || left == null) return false;
 
@@ -10,6 +11,6 @@ const myInstanceof = (left, right) => {
   }
 }
 
-const obj = {}
 
-myInstanceof(obj, 'object')
+const obj = {}
+console.log(myInstanceof(obj, Object))
