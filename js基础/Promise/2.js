@@ -15,7 +15,7 @@ class Promise{
       if(this.status === PENDING) {
         this.status = FULFILLED;
         this.value = value;
-        this.onResolveCallbacks.forEach(fn => fn());
+        this.onResolveCallbacks.forEach(fn => fn(value));
       }
     }
 
@@ -23,7 +23,7 @@ class Promise{
       if(this.status === PENDING) {
         this.status = REJECTED;
         this.reason = reason;
-        this.onRejectCallbacks.forEach(fn => fn());
+        this.onRejectCallbacks.forEach(fn => fn(reason));
       }
     }
 
@@ -44,13 +44,9 @@ class Promise{
     }
 
     if(this.status === PENDING) {
-      this.onResolveCallbacks.push(() => {
-        onFulfilled(this.value);
-      })
+      this.onResolveCallbacks.push(onFulfilled)
 
-      this.onRejectCallbacks.push(() => {
-        onReject(this.value);
-      })
+      this.onRejectCallbacks.push(onReject)
     }
   }
 }
