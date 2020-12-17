@@ -32,7 +32,7 @@ let copy = (obj, ...args) => {
     let source = args[i];
     for(let key in source) {
       if(Object.prototype.hasOwnProperty.call(source, key)) {
-        to[key] = source[key]
+        to[key] = source[key];
       }
     }
   }
