@@ -1,7 +1,18 @@
 <script>
-  // 正则  test
-  var regex = /hello/;
-  console.log(regex.test("hello"));
+  // test
+  var reg = /(\d{4})-(\d{2})-(\d{2})/g;
+  var string = '2018-12-23';
+  console.log(string.replace(reg, '$2/$3/$1'));
+  console.log(reg.exec(string));
+  console.log(RegExp.$1);
+  console.log(RegExp.$2);
+
+
+  // 匹配密码至少包含数字和英文字母 6-12位数
+  var string = 'ds22';
+  var reg = /(?!^[0-9]{6,12}$)(?!^[a-z]{6,12}$)(?![A-Z]{6,12}$)^[0-9a-zA-Z]{6,12}$/g
+  // var reg = /((?=.*[0-9])(?=.*[a-z]|(?=.*[0-9])(?=.*[A-Z])|(?=.*[a-z])(?=.*[A-Z]))^[0-9A-Za-z]{6,12}$)/g
+  console.log(reg.test(string));
 
   //   正则  match  横向模糊匹配
   // 正则 /ab{2,5}c/g 后面多了个g，既是匹配所有，而不是第一个
@@ -9,7 +20,7 @@
   var string = "abc abbc abbbc abbbbc abbbbbc abbbbbbc";
   console.log(string.match(regex));
 
-  //   正则  match  纵向模糊匹配
+  // 正则  match  纵向模糊匹配
   var regex = /a[123]b/g;
   var string = "a0b a1b a2b a3b a4b";
   console.log(string.match(regex));
@@ -28,7 +39,6 @@
   var regex = /good|nice/g;
   var string = "good idea, nice try.";
   console.log(string.match(regex));
-
   // 案例1: 匹配 16进制颜色值
   var regex = /#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})/g;
   var string = "#ffbbad #Fc01DF #FFF #ffE";
